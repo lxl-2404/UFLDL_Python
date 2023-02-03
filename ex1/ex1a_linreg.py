@@ -1,4 +1,7 @@
-
+"""
+Created on 2023/2/1
+UFLDL excecise 1a related linear regression
+"""
 #import pandas as pd
 import numpy as np
 from scipy import optimize as op
