@@ -28,7 +28,8 @@ def costFunction(Theta, X, y):
 
 def gradientFun(Theta, X, y):
     return np.dot(X.T,(np.dot(X, Theta)-y))
-result = op.minimize(fun=costFunction,x0=theta,args=(Train_X, Train_y),jac=gradientFun)   #Call the minimize function to regression
+
+result = op.minimize(fun=costFunction,x0=theta,args=(Train_X, Train_y),  jac=gradientFun)   #Call the minimize function to regression
 print(result)
 predicted_prices =np.dot(Test_X, result.x)
 
