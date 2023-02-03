@@ -36,6 +36,15 @@ def load12Tdata():
     '''
     file1 = "common/data/common/t10k-images-idx3-ubyte"
     file2 = "common/data/common/t10k-labels-idx1-ubyte"
+    test_ima = idx2np.convert_from_file(file1)
+    test_lab = idx2np.convert_from_file(file2)
+    tempindex = np.where(test_lab < 2)  #Choose numbers 1 and 2 and get their index array. 
+    test_lab12 = test_lab[tempindex]    #Use above index to filter images and relative labels.
+    test_ima12 = test_ima[tempindex]
+
+    return test_ima12, test_lab12
 
 trainI12, trainL12 = load12data()
+testI12, testL12 = load12Tdata()
+
 print(trainL12[7])
