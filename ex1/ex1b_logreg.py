@@ -54,12 +54,18 @@ def sigmoid(x):
     return z
 
 def costFunction(theta,X,Y):
+    '''
+    Cost Function.
+    '''
     m = Y.shape[0]
     J = (-np.dot(Y.T, np.log(sigmoid(X @ theta))) - np.dot((1 - Y).T, np.log(1 - sigmoid(X @ theta))))
     return J
 
 
 def gradient(theta,X,Y):
+    '''
+    Gradient function.
+    '''
     m = Y.shape[0]
     grad=np.dot(X.T,sigmoid(X @ theta)-Y)
     return grad
