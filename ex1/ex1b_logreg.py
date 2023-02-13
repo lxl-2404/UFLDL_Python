@@ -66,7 +66,7 @@ def gradient(theta,X,Y):
     '''
     Gradient function.
     '''
-    m = Y.shape[0]
+    # m = Y.shape[0]
     grad=np.dot(X.T,sigmoid(X @ theta)-Y)
     return grad
 
