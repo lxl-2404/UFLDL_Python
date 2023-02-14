@@ -23,7 +23,7 @@ def load12data():
     # cv2.destroyAllWindows()
     # # x = data[:,0]
     # print(tra_lab[9])
-    tempindex = np.where(tra_lab < 2 )
+    tempindex = np.where(tra_lab < 2 )   #get the index of labels of 0 and 1.
     tra_ima1 = tra_ima[tempindex]
     tra_ima1 = np.reshape(tra_ima1, (tra_ima1.shape[0], tra_ima1.shape[1]*tra_ima1.shape[2])) #Reshape the array from 3 dimensions to 2 dimensions.
     tra_ima1 = np.c_[np.ones(tra_ima1.shape[0]),tra_ima1] #Add a column of ones as the intercept feature.
