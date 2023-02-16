@@ -26,9 +26,8 @@ def load12data():
 
     tra_ima1 = np.reshape(tra_ima, (tra_ima.shape[0], tra_ima.shape[1]*tra_ima.shape[2])) #Reshape the array from 3 dimensions to 2 dimensions.
     tra_ima1 = np.c_[np.ones(tra_ima1.shape[0]),tra_ima1] #Add a column of ones as the intercept feature.
-    tra_lab1 = tra_lab + 1 
 
-    return tra_ima1, tra_lab1
+    return tra_ima1, tra_lab
 
 def load12Tdata():
     '''
@@ -42,8 +41,8 @@ def load12Tdata():
 
     test_ima12 = np.reshape(test_ima, (test_ima.shape[0], test_ima.shape[1]*test_ima.shape[2]))
     test_ima12 = np.c_[np.ones(test_ima12.shape[0]),test_ima12]
-    test_lab12 = test_lab + 1
-    return test_ima12, test_lab12
+    # test_lab12 = test_lab + 1   # different from MATLAB, python vector's index begins from 0.
+    return test_ima12, test_lab
 
 def sigmoid(x):
     # y = np.where(x>0, x, 0.000001)
@@ -60,9 +59,17 @@ def costFunction(theta,X,Y):
     A = [np.exp(X@theta), np.ones(m)]
     B = np.sum(A, axis=1)                    #sum elements of every row, output a array.
     B = B.reshape(-1, 1)   #reshape 之前，B的shape是(m, ),reshape之后shape是(m, 1), 不reshape的话，下行的A / B会报错
-    C = A / B
-    
+    C = np.log(A / B)
+    D = sub2ind(C, Y)
+    J = -np.sum(D)
     return J
+
+def sub2ind(A, B):
+    C = np.zeros(B.shape[0])
+    for i in range(B.shape[0]):
+        C[i] = A[i][B[i]]
+    return C
+
 
 
 def gradient(theta,X,Y):
