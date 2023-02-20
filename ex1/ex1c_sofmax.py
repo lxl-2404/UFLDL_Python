@@ -10,7 +10,7 @@ import idx2numpy as idx2np
 from scipy.sparse import csr_matrix
 # import cv2
 
-def load12data():
+def loaddata():
     '''
     load training data from mnist dataset and labels have 1 added to them. Add a intepret column to the images data.
     return: training data in ndarray format.
@@ -57,7 +57,7 @@ def costFunction(theta,X,Y):
     n = X.shape[1]
     m = X.shape[0]
     theta = np.reshape(theta, (n,-1))
-    A = [np.exp(X@theta), np.ones(m)]
+    A = np.c_[np.exp(X@theta), np.ones(m)]
     B = np.sum(A, axis=1)                    #sum elements of every row, output a array.
     B = B.reshape(-1, 1)   #reshape 之前，B的shape是(m, ),reshape之后shape是(m, 1), 不reshape的话，下行的A / B会报错
     C = np.log(A / B)
@@ -86,8 +86,17 @@ def gradient(theta,X,Y):
     B = B.reshape(-1, 1)   #reshape 之前，B的shape是(m, ),reshape之后shape是(m, 1), 不reshape的话，下行的A / B会报错
     C = A / B
     D = csr_matrix((np.ones(m), (np.arange(m), Y))).toarray()
-    D[]
+    grad = X.T@(D - C)
+    grad = np.delete(grad, -1, axis = 1)
+    grad = grad.reshape(-1, 1)
+    return grad
 
 
 if __name__=='__main__':
-    theta = 
+    trainI, trainL = loaddata()
+    m = trainI.shape[0]
+    n = trainI.shape[1]
+    theta = np.random.rand((n*9))*0.0001
+    result = op.minimize(fun=costFunction, x0=theta, args=(trainI, trainL), method='BFGS', jac=gradient)
+    print(result.message)
+    print(result.success)
