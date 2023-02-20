@@ -7,6 +7,7 @@ from scipy import optimize as op
 import matplotlib.pyplot as plt
 # from mnist import MNIST
 import idx2numpy as idx2np
+from scipy.sparse import csr_matrix
 # import cv2
 
 def load12data():
@@ -24,8 +25,8 @@ def load12data():
     # # x = data[:,0]
     # print(tra_lab[9])
 
-    tra_ima1 = np.reshape(tra_ima, (tra_ima.shape[0], tra_ima.shape[1]*tra_ima.shape[2])) #Reshape the array from 3 dimensions to 2 dimensions.
-    tra_ima1 = np.c_[np.ones(tra_ima1.shape[0]),tra_ima1] #Add a column of ones as the intercept feature.
+    tra_ima1 = np.reshape(tra_ima, (tra_ima.shape[0], tra_ima.shape[1]*tra_ima.shape[2]))    #Reshape the array from 3 dimensions to 2 dimensions.
+    tra_ima1 = np.c_[np.ones(tra_ima1.shape[0]),tra_ima1]         #Add a column of ones as the intercept feature.
 
     return tra_ima1, tra_lab
 
@@ -55,13 +56,14 @@ def costFunction(theta,X,Y):
     '''
     n = X.shape[1]
     m = X.shape[0]
-    theta = np.reshape(X, (n,-1))
+    theta = np.reshape(theta, (n,-1))
     A = [np.exp(X@theta), np.ones(m)]
     B = np.sum(A, axis=1)                    #sum elements of every row, output a array.
     B = B.reshape(-1, 1)   #reshape 之前，B的shape是(m, ),reshape之后shape是(m, 1), 不reshape的话，下行的A / B会报错
     C = np.log(A / B)
     D = sub2ind(C, Y)
     J = -np.sum(D)
+
     return J
 
 def sub2ind(A, B):
@@ -76,6 +78,16 @@ def gradient(theta,X,Y):
     '''
     Gradient function.
     '''
-    # m = Y.shape[0]
-    grad=np.dot(X.T,sigmoid(X @ theta)-Y)
-    return grad
+    n = X.shape[1]
+    m = X.shape[0]
+    theta = np.reshape(theta, (n,-1))
+    A = np.c_[np.exp(X@theta), np.ones(m)]
+    B = np.sum(A, axis=1)                    #sum elements of every row, output a array.
+    B = B.reshape(-1, 1)   #reshape 之前，B的shape是(m, ),reshape之后shape是(m, 1), 不reshape的话，下行的A / B会报错
+    C = A / B
+    D = csr_matrix((np.ones(m), (np.arange(m), Y))).toarray()
+    D[]
+
+
+if __name__=='__main__':
+    theta = 
