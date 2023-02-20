@@ -45,10 +45,6 @@ def load12Tdata():
     # test_lab12 = test_lab + 1   # different from MATLAB, python vector's index begins from 0.
     return test_ima12, test_lab
 
-def sigmoid(x):
-    # y = np.where(x>0, x, 0.000001)
-    z = 1/(1+ np.exp(-x))
-    return z
 
 def costFunction(theta,X,Y):
     '''
