@@ -92,7 +92,7 @@ if __name__=='__main__':
     trainI, trainL = loaddata()
     m = trainI.shape[0]
     n = trainI.shape[1]
-    theta = np.random.rand((n*9))*0.0001
-    result = op.minimize(fun=costFunction, x0=theta, args=(trainI, trainL), method='BFGS', jac=gradient)
+    theta = np.random.rand(n*9)*0.0001
+    result = op.minimize(fun=costFunction, x0=theta, args=(trainI, trainL), method='TNC', jac=gradient)
     print(result.message)
     print(result.success)
