@@ -1,6 +1,7 @@
 """
 Created on 2023/2/14
 UFLDL excecise 1c related softmax regression
+Modified: 2/23/2023
 """
 import numpy as np
 from scipy import optimize as op
