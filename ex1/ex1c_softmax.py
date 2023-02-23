@@ -85,6 +85,7 @@ def gradient(theta,X,Y):
     grad = X.T@(D - C)
     grad = np.delete(grad, -1, axis = 1)
     grad = grad.reshape(-1, 1)
+    grad = -grad.flatten()
     return grad
 
 
@@ -96,3 +97,14 @@ if __name__=='__main__':
     result = op.minimize(fun=costFunction, x0=theta, args=(trainI, trainL), method='TNC', jac=gradient)
     print(result.message)
     print(result.success)
+    theta = result.x
+    theta = np.reshape(theta, (n,-1))
+    msg = 1
+    while msg > 0:
+        msg = input("输入0-59999之间随机整数")
+        msg = int(msg)
+        Pindex = trainI[msg]@theta
+        Pindex = np.append(Pindex, 1)
+        print(Pindex)
+        print(np.argmax(Pindex))
+        print(trainL[msg])
